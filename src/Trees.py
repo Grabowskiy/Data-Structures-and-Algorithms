@@ -5,80 +5,77 @@ class BinaryNode:
         self.right = right
 
 
-def preorder_walk(curr: BinaryNode or None, path: list[int]) -> list[int]:
-    if not curr:
-        return path
+class BST:
+    def __search(self, item:int, node: BinaryNode) -> bool:
+        if not node:
+            return False
 
-    # Recursion
-    # pre
-    path.append(curr.value)
-    # recurse
-    preorder_walk(curr.left, path)
-    preorder_walk(curr.right, path)
-    # post
-    return path
+        if node.value == item:
+            return True
 
+        if item < node.value:
+            return self.__search(item, node.left)
+        return self.__search(item, node.right)
 
-def bt_preorder(root: BinaryNode) -> list[int]:
-    return preorder_walk(root, [])
+    # O(log_n) - O(n) -> O(height_of_tree)
+    def find(self, item: int, node: BinaryNode) -> bool:
+        return self.__search(item, node)
 
+    def insert(self, item: int, node: BinaryNode) -> bool:
+        if not node:
+            return BinaryNode(item)
+        if item <= node.value:
+            node.left = self.insert(item, node.left)
+        if item > node.value:
+            node.right = self.insert(item, node.right)
 
-def inorder_walk(curr: BinaryNode or None, path: list[int]) -> list[int]:
-    if not curr:
-        return path
-
-    # Recursion
-    # pre
-    # recurse
-    inorder_walk(curr.left, path)
-    path.append(curr.value)
-    inorder_walk(curr.right, path)
-    # post
-    return path
+        return node
 
 
-def bt_inorder(root: BinaryNode) -> list[int]:
-    return inorder_walk(root, [])
+def bst_test():
+    bst_tree = BinaryNode(7,
+                          BinaryNode(5,
+                                     BinaryNode(3,
+                                                BinaryNode(2), BinaryNode(7))),
+                          BinaryNode(15,
+                                     BinaryNode(9,
+                                                BinaryNode(8)),
+                                     BinaryNode(16))
+                          )
 
-def postorder_walk(curr: BinaryNode or None, path: list[int]) -> list[int]:
-    if not curr:
-        return path
+    bst = BST()
+    number = 9
+    print(f"Is there {number} in the binary search tree? {'Yes' if bst.find(number, bst_tree) else 'No'}")
 
-    # Recursion
-    # pre
-    # recurse
-    postorder_walk(curr.left, path)
-    postorder_walk(curr.right, path)
-    # post
-    path.append(curr.value)
-
-    return path
+    number = 46
+    print(f"Is there {number} in the binary search tree? {'Yes' if bst.find(number, bst_tree) else 'No'}")
+    print(f"Add number {number}.")
+    bst_tree = bst.insert(number, bst_tree)
+    print(f"Is there {number} in the binary search tree? {'Yes' if bst.find(number, bst_tree) else 'No'}")
 
 
-def bt_postorder(root: BinaryNode) -> list[int]:
-    return postorder_walk(root, [])
+# Trie implementation in the future
+'''
+class TrieNode:
+    def __init__(self, char: str, is_word=False):
+        self.is_word = is_word
+        self.c = char
+        # Because we only have 26 letters, using list instead of a set is faster regarding lookup speed
+        self.chars = []
+        self.next = None
+        self.prev = None
+
+    def add_char(self, char: str):
+        self.chars.add(char)
+
+
+# Retrieval tree / Try tree
+def Trie():
+    def add(self, word: list[str]):
+        pass
+'''
+
 
 if __name__ == "__main__":
-    tree = BinaryNode(0,
-                       BinaryNode(1,
-                                  BinaryNode(3),
-                                  BinaryNode(4)),
-                        BinaryNode(2,
-                                   BinaryNode(5),
-                                   BinaryNode(6))
-    )
-
-    print(" --- PREORDER --- ")
-    preorder = bt_preorder(tree)
-    for n in preorder:
-        print(n, end=' ')
-
-    print("\n\n --- INORDER --- ")
-    inorder = bt_inorder(tree)
-    for n in inorder:
-        print(n, end=' ')
-
-    print("\n\n --- POSTORDER --- ")
-    postorder = bt_postorder(tree)
-    for n in postorder:
-        print(n, end=' ')
+    # BST test
+    bst_test()

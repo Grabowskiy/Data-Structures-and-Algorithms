@@ -2,6 +2,8 @@ import math
 
 
 # Only if array is sorted
+
+# It returns the index in the array
 def my_binary_search(array: list[int], v: int) -> int:
     index = 0
     while len(array) != 1:
@@ -17,10 +19,12 @@ def my_binary_search(array: list[int], v: int) -> int:
     return -1
 
 
+# Returns true if element is in the array, else false
 def binary_search(array: list[int], value: int) -> bool:
     lp = 0
     hp = len(array)
 
+    # O(log_n)
     while lp < hp:
         midp = math.floor(lp + (hp - lp) / 2)
         compare = array[midp]
@@ -35,6 +39,7 @@ def binary_search(array: list[int], value: int) -> bool:
     return False
 
 
+# Special algorithm: O(sqrt(n))
 def two_crystal_balls(breaks: list[bool]) -> int:
     jump = math.floor(math.sqrt(len(breaks)))
     i = jump
