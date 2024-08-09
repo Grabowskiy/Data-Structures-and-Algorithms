@@ -47,17 +47,38 @@ def quicksort(array: list[int]) -> None:
     qs(array, 0, len(array)-1)
 
 
+# INSERTION SORT
+def insertion_sort(array: list[int]) -> None:
+    for i in range(1, len(array)):
+        for j in range(i, 0, -1):
+            if array[j-1] > array[j]:
+                tmp = array[j]
+                array[j] = array[j-1]
+                array[j-1] = tmp
+
+
+# COMB SORT
+def comb_sort(array: list[int]) -> None:
+    gap = len(array)
+    while gap > 0:
+        i = 0
+        while gap < len(array):
+            if array[i] > array[gap]:
+                tmp = array[gap]
+                array[gap] = array[i]
+                array[i] = tmp
+            i += 1
+            gap += 1
+        gap -= i
+        gap = math.floor(gap / 1.3)
+
+
 # MERGE SORT
 def merge_sort():
     pass
 
 
-# COMB SORT
-def comb_sort():
-    pass
-
-
 array = numpy.random.randint(0, 100, 20)
 print(f"Before sort: {array}")
-quicksort(array)
+comb_sort(array)
 print(f"After sort:  {array}")
