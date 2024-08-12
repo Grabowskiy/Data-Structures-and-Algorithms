@@ -74,11 +74,42 @@ def comb_sort(array: list[int]) -> None:
 
 
 # MERGE SORT
-def merge_sort():
-    pass
+def merge(arr: list[int], left: list[int], right: list[int]) -> None:
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+
+    if i < len(left):
+        result.extend(left[i:])
+    else:
+        result.extend(right[j:])
+
+    arr[:] = result
 
 
-array = numpy.random.randint(0, 100, 20)
+def merge_sort(array: list[int]) -> None:
+    if len(array) <= 1:
+        return None
+
+    midpoint = math.floor(len(array) / 2)
+
+    l = array[:midpoint]
+    r = array[midpoint:]
+
+    merge_sort(l)
+    merge_sort(r)
+
+    merge(array, l, r)
+
+
+array = numpy.random.randint(-50, 100, 15)
 print(f"Before sort: {array}")
-comb_sort(array)
+merge_sort(array)
 print(f"After sort:  {array}")
